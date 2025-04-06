@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Final Project: Animating Explosions Using Particle Systems</title>
+  <style>
+    body { margin: 0; background-color: white; color: black; text-align: center; }
+    canvas { display: block; }
+    #info { position: absolute; top: 10px; left: 10px; color: black; }
+  </style>
+  <link href="css/FinalProjectTable.css" rel="stylesheet">
+  <!-- To be able to use Three.js for animation and OrbitComtrols for rotating the scene -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!--<script type="module" src="WebGL_Contents/OrbitControls.js"></script> -->
+
+  <!-- Useful 3rd party libraries -->
+  <script type="text/javascript" src="WebGL_Contents/jquery-1.12.2.min.js"></script>
+  <script type="text/javascript" src="WebGL_Contents/glMatrix-0.9.5.js"></script>
+
+  <!-- Shader initialization utils -->
+  <script type="text/javascript" src="WebGL_Contents/shader-utils.js"></script>
+
+  <!-- WebGL debugging utils -->
+  <script type="text/javascript" src="WebGL_Contents/webgl-debug.js"></script>
+  <script type="text/javascript" src="WebGL_Contents/debug-utils.js"></script>
+
+  <!-- Functions for the GUI-->
+  <script src="GUI_functions.js"></script>
+
+</head>
+<body>
+  <h1>Final Project: Animating Explosions Using Particle Systems</h1>
+
+  <!-- Flex container for the animation and control panel -->
+  <div style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; padding: 20px;">
+
+    <!-- WebGL Canvas -->
+    <canvas id="canvas0" style="border:none;" width="800" height="800"></canvas>
+
+    <!-- Control Panel for the Animation Itself (Table) -->
+    <div class="panel">
+      <p>Animation Controls</p>
+      <table>
+        <tr>
+          <div style="display: table; width: 100%;">
+            <!-- Button that will reset the scene after the explosion -->
+            <div style="display: table-cell; text-align: center;">
+                <button type="button" onclick="resetMesh();">Reset Scene</button>
+            </div>
+            <!-- Button that resets the animation parameters to there initial values -->
+            <div style="display: table-cell; text-align: center;">
+                <button type="button" onclick="resetInitialParameters();">Initial Parameters</button>
+            </div>
+          </div>
+        </tr>
+          <!-- Slider for adjusting the explosion strength, which affects all explosion particle effects -->
+          <tr>
+            <td>Explosion Strength</td>
+            <td>
+                <input type="range" min="1" max="10" value="5" step="1.0" onchange="updateSliderExplosionStrength(this.value);">
+                (<span id="sliderAmountExplosionStrength">5</span>)
+            </td>
+          </tr>
+          <!-- Slider for adjusting the explosion falloff distance, which affects the magnitude of force of the explosion overtime -->
+          <tr>
+            <td>Explosion Falloff Distance</td>
+            <td>
+                <input type="range" min="2.0" max="4.0" value="3" step="0.25" onchange="updateSliderExplosionFalloffDistance(this.value);">
+                (<span id="sliderAmountExplosionFalloffDistance">3</span>)
+            </td>
+          </tr>
+          <!-- Slider for adjusting the explosion decay rate, which affects the explosion fireball -->
+          <tr>
+            <td>Explosion Decay Rate</td>
+            <td>
+                <input type="range" min="3.0" max="5.0" value="4" step="0.25" onchange="updateSliderExplosionDecayRate(this.value);">
+                (<span id="sliderAmountExplosionDecayRate">4</span>)
+            </td>
+          </tr>
+          <!-- Slider for adjusting the debris particle mass -->
+          <tr>
+              <td>Debris Particle Mass</td>
+              <td>
+                  <input type="range" min="1" max="10" value="5" step="0.25" onchange="updateSliderParticleMass(this.value);">
+                  (<span id="sliderAmountParticleMass">5</span>)
+              </td>
+          </tr>
+          <!-- Slider for adjusting the debris particle size -->
+          <tr>
+              <td>Debris Particle Size</td>
+              <td>
+                  <input type="range" min="0.1" max="0.5" value=".25" step="0.01" onchange="updateSliderParticleSize(this.value);">
+                  (<span id="sliderAmountParticleSize">.25</span>)
+              </td>
+          </tr>
+      </table>
+    </div>
+
+    <!-- Control Panel for the Camera (Table) -->
+    <div class="panel">
+      <p>Camera Controls</p>
+      <table>
+          <!-- Button for reseting the camera to its initial position -->
+          <tr>
+            <div style=" text-align: center;">
+                <button type="button" onclick="resetCamera();">Reset Camera</button>
+            </div>
+          </tr>
+          <!-- Slider for the distance toward or away from the origin -->
+          <tr>
+            <td>Distance from Origin</td>
+            <td>
+                <input type="range" min="10" max="100" value="50" step="5" onchange="updateSliderCameraDistance(this.value);">
+                (<span id="sliderAmountCameraDistance">50</span>)
+            </td>
+          </tr>
+          <!-- Slider for the horizontal rotation about the origin -->
+          <tr>
+            <td>Horizontal Rotation</td>
+            <td>
+                <input type="range" min="-45" max="45" value="0" step="5" onchange="updateSliderHorizontalRotation(this.value);">
+                (<span id="sliderAmountHorizontalRotation">0°</span>)
+            </td>
+          </tr>
+          <!-- Slider for the vertical rotation about the origin -->
+          <tr>
+            <td>Vertical Rotation</td>
+            <td>
+                <input type="range" min="-45" max="45" value="0" step="5" onchange="updateSliderVerticalRotation(this.value);">
+                (<span id="sliderAmountVerticalRotation">0°</span>)
+            </td>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Script for the actual explosion scene and animation -->
+  <script src="Explosion_Animation.js"></script>
+</body>
+</html>
