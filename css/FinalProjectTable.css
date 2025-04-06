@@ -1,0 +1,20 @@
+body, p, table {
+	font-family: Verdana, Geneva, 'DejaVu Sans', sans-serif;
+	font-size: 14px;
+}
+
+div.panel {
+	padding: 10px;
+	border: 2px solid #666;
+	background: #eee;
+	width: 250px; /* Ensures it doesn't shrink */
+}
+
+	div.panel p {
+		font-weight: bold;
+		margin: 5px 0;
+	}
+
+td {
+	padding: 5px;
+}
